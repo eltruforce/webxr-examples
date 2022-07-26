@@ -14,7 +14,7 @@ import { OrbitControls } from "../../../libs/three/jsm/OrbitControls";
 
 // Method 1
 // -------------------------------------------------------------------------------------------------
-export default class SecondGear extends Component {
+export default class App extends Component {
   componentDidMount(): void {
     const container = document.createElement("div");
     document.body.appendChild(container);
@@ -78,7 +78,7 @@ export default class SecondGear extends Component {
 
 // Method 2
 // -------------------------------------------------------------------------------------------------
-// function SecondGear() {
+// function App() {
 //   useEffect(() => {
 //     const container = document.createElement("div");
 //     document.body.appendChild(container);
@@ -136,5 +136,5 @@ export default class SecondGear extends Component {
 //   return <div id="container" />;
 // }
 
-// export default SecondGear;
+// export default App;
 // -------------------------------------------------------------------------------------------------
