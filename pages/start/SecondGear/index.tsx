@@ -28,7 +28,7 @@ export default class App extends Component {
     camera.position.set(0, 0, 4);
 
     const scene = new Scene();
-    scene.background = new Color(0xaaaaaa);
+    scene.background = new Color(0x090c17);
 
     const ambient = new HemisphereLight(0xffffff, 0xbbbbff, 0.3);
     scene.add(ambient);
@@ -45,7 +45,7 @@ export default class App extends Component {
     renderer.setAnimationLoop(this.render.bind(this));
 
     const geometry = new BoxBufferGeometry();
-    const material = new MeshStandardMaterial({ color: 0xff0000 });
+    const material = new MeshStandardMaterial({ color: 0x3657c3 });
 
     const mesh = new Mesh(geometry, material);
     scene.add(mesh);
@@ -92,7 +92,7 @@ export default class App extends Component {
 //     camera.position.set(0, 0, 4);
 
 //     const scene = new Scene();
-//     scene.background = new Color(0xaaaaaa);
+//     scene.background = new Color(0x090c17);
 
 //     const ambient = new HemisphereLight(0xffffff, 0xbbbbff, 0.3);
 //     scene.add(ambient);
@@ -109,7 +109,7 @@ export default class App extends Component {
 //     renderer.setAnimationLoop(render.bind(this));
 
 //     const geometry = new BoxBufferGeometry();
-//     const material = new MeshStandardMaterial({ color: 0xff0000 });
+//     const material = new MeshStandardMaterial({ color: 0x3657c3 });
 
 //     const mesh = new Mesh(geometry, material);
 
