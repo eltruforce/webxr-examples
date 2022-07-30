@@ -10,73 +10,133 @@ import {
   Scene,
   WebGLRenderer,
 } from "three";
-import { OrbitControls } from "../../../libs/three/jsm/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 // Method 1
 // -------------------------------------------------------------------------------------------------
 export default class App extends Component {
-  componentDidMount(): void {
+  private camera: PerspectiveCamera;
+  private scene: Scene;
+  private renderer: WebGLRenderer;
+  private mesh: Mesh;
+
+  componentDidMount = () => {
     const container = document.createElement("div");
     document.body.appendChild(container);
 
-    const camera = new PerspectiveCamera(
+    this.camera = new PerspectiveCamera(
       60,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
-    camera.position.set(0, 0, 4);
+    this.camera.position.set(0, 0, 4);
 
-    const scene = new Scene();
-    scene.background = new Color(0x090c17);
+    this.scene = new Scene();
+    this.scene.background = new Color(0x090c17);
 
     const ambient = new HemisphereLight(0xffffff, 0xbbbbff, 0.3);
-    scene.add(ambient);
+    this.scene.add(ambient);
 
     const light = new DirectionalLight();
     light.position.set(0.2, 1, 1);
-    scene.add(light);
+    this.scene.add(light);
 
-    const renderer = new WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
+    this.renderer = new WebGLRenderer({ antialias: true });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(this.renderer.domElement);
 
-    renderer.setAnimationLoop(this.render.bind(this));
+    this.renderer.setAnimationLoop(this.animate.bind(this));
 
     const geometry = new BoxBufferGeometry();
     const material = new MeshStandardMaterial({ color: 0x3657c3 });
 
-    const mesh = new Mesh(geometry, material);
-    scene.add(mesh);
+    this.mesh = new Mesh(geometry, material);
 
-    const controls = new OrbitControls(camera, renderer.domElement);
+    this.scene.add(this.mesh);
 
-    window.addEventListener("resize", resize.bind(this));
+    const controls = new OrbitControls(this.camera, this.renderer.domElement);
 
-    function resize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    resize();
+    window.addEventListener("resize", this.resize.bind(this));
+  };
 
-    function render() {
-      mesh.rotateY(0.01);
+  resize = () => {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+  };
 
-      renderer.render(scene, camera);
-      requestAnimationFrame(render);
-    }
-    render();
-  }
+  animate = () => {
+    this.mesh.rotateY(0.01);
+    this.renderer.render(this.scene, this.camera);
+  };
 
-  render() {
-    return <div id="container" />;
-  }
+  render = () => <div id="container" />;
 }
 // -------------------------------------------------------------------------------------------------
 
 // Method 2
+// -------------------------------------------------------------------------------------------------
+// export default class App extends Component {
+//   componentDidMount(): void {
+//     const container = document.createElement("div");
+//     document.body.appendChild(container);
+
+//     const camera = new PerspectiveCamera(
+//       60,
+//       window.innerWidth / window.innerHeight,
+//       0.1,
+//       100
+//     );
+//     camera.position.set(0, 0, 4);
+
+//     const scene = new Scene();
+//     scene.background = new Color(0x090c17);
+
+//     const ambient = new HemisphereLight(0xffffff, 0xbbbbff, 0.3);
+//     scene.add(ambient);
+
+//     const light = new DirectionalLight();
+//     light.position.set(0.2, 1, 1);
+//     scene.add(light);
+
+//     const renderer = new WebGLRenderer({ antialias: true });
+//     renderer.setPixelRatio(window.devicePixelRatio);
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     container.appendChild(renderer.domElement);
+
+//     renderer.setAnimationLoop(animate.bind(this));
+
+//     const geometry = new BoxBufferGeometry();
+//     const material = new MeshStandardMaterial({ color: 0x3657c3 });
+
+//     const mesh = new Mesh(geometry, material);
+//     scene.add(mesh);
+
+//     const controls = new OrbitControls(camera, renderer.domElement);
+
+//     window.addEventListener("resize", resize.bind(this));
+
+//     function resize() {
+//       camera.aspect = window.innerWidth / window.innerHeight;
+//       camera.updateProjectionMatrix();
+//       renderer.setSize(window.innerWidth, window.innerHeight);
+//     }
+
+//     function animate() {
+//       mesh.rotateY(0.01);
+//       renderer.render(scene, camera);
+//     }
+//   }
+
+//   render() {
+//     return <div id="container" />;
+//   }
+// }
+// -------------------------------------------------------------------------------------------------
+
+// Method 3
 // -------------------------------------------------------------------------------------------------
 // function App() {
 //   useEffect(() => {
@@ -106,7 +166,7 @@ export default class App extends Component {
 //     renderer.setSize(window.innerWidth, window.innerHeight);
 //     container.appendChild(renderer.domElement);
 
-//     renderer.setAnimationLoop(render.bind(this));
+//     renderer.setAnimationLoop(animate.bind(this));
 
 //     const geometry = new BoxBufferGeometry();
 //     const material = new MeshStandardMaterial({ color: 0x3657c3 });
@@ -124,13 +184,11 @@ export default class App extends Component {
 //       camera.updateProjectionMatrix();
 //       renderer.setSize(window.innerWidth, window.innerHeight);
 //     }
-//     resize();
 
-//     function render() {
+//     function animate() {
 //       mesh.rotateY(0.01);
 //       renderer.render(scene, camera);
 //     }
-//     render();
 //   }, []);
 
 //   return <div id="container" />;
