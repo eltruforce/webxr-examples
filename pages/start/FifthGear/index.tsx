@@ -15,7 +15,7 @@ import {
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-// Method 1
+// Way 1
 // -------------------------------------------------------------------------------------------------
 export default class App extends Component {
   private camera: PerspectiveCamera;
@@ -96,7 +96,7 @@ export default class App extends Component {
 }
 // -------------------------------------------------------------------------------------------------
 
-// Method 2
+// Way 2
 // -------------------------------------------------------------------------------------------------
 // export default class App extends Component {
 //   componentDidMount(): void {
@@ -173,7 +173,7 @@ export default class App extends Component {
 // }
 // -------------------------------------------------------------------------------------------------
 
-// Method 3
+// Way 3
 // -------------------------------------------------------------------------------------------------
 // function App() {
 //   useEffect(() => {

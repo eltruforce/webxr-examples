@@ -30,7 +30,7 @@ export default class App extends Component {
 
 //     function resize() {}
 
-//     function render() {}
+//     function animate() {}
 //   }
 //   render() {
 //     return <div id="container" />;

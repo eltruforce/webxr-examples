@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useEffect } from "react";
 import {
   Box3,
   Color,
@@ -18,7 +18,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { vector3ToString } from "../../../libs/DebugUtils";
 
-// Method 1
+// Way 1
 // -------------------------------------------------------------------------------------------------
 export default class App extends Component {
   private camera: PerspectiveCamera;
@@ -159,19 +159,131 @@ export default class App extends Component {
 }
 // -------------------------------------------------------------------------------------------------
 
-
-// Method 2
+// Way 2
 // -------------------------------------------------------------------------------------------------
 // export default class App extends Component {
 //   componentDidMount(): void {
-//     const container = document.createElement("div");
-//     document.body.appendChild(container);
+// const container = document.createElement("div");
+// document.body.appendChild(container);
 
-//     window.addEventListener("resize", resize.bind(this));
+// const camera = new PerspectiveCamera(
+//   60,
+//   window.innerWidth / window.innerHeight,
+//   0.1,
+//   100
+// );
+// camera.position.set(0, 4, 14);
 
-//     function resize() {}
+// const scene = new Scene();
+// scene.background = new Color(0x090c17);
 
-//     function render() {}
+// const ambient = new HemisphereLight(0xffffff, 0xbbbbff, 0.3);
+// scene.add(ambient);
+
+// const light = new DirectionalLight();
+// light.position.set(0.2, 1, 1);
+// scene.add(light);
+
+// const renderer = new WebGLRenderer({ antialias: true, alpha: true });
+// renderer.setPixelRatio(window.devicePixelRatio);
+// renderer.setSize(window.innerWidth, window.innerHeight);
+// renderer.outputEncoding = sRGBEncoding;
+// renderer.physicallyCorrectLights = true;
+// setEnvironment();
+// container.appendChild(renderer.domElement);
+
+// // Add code here
+// const loadingBar = new LoadingBar();
+// loadGLTF();
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+// controls.target.set(0, 3.5, 0);
+// controls.update();
+
+// window.addEventListener("resize", resize.bind(this));
+
+// function setEnvironment() {
+//   const loader = new RGBELoader();
+//   const pmremGenerator = new PMREMGenerator(renderer);
+//   pmremGenerator.compileEquirectangularShader();
+//   loader.load(
+//     "/assets/hdr/venice_sunset_1k.hdr",
+//     (texture) => {
+//       const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+//       pmremGenerator.dispose();
+//       scene.environment = envMap;
+//     },
+//     undefined,
+//     (err) => {
+//       console.error("An error occurred setting the environment");
+//     }
+//   );
+// }
+
+// function loadGLTF() {
+//   const loader = new GLTFLoader().setPath("/assets/");
+
+//   loader.load(
+//     "office-chair.glb",
+//     function (gltf) {
+//       const chair = gltf.scene;
+//       const bbox = new Box3().setFromObject(gltf.scene);
+//       console.log(
+//         `min:${vector3ToString(bbox.min, 2)} - max:${vector3ToString(
+//           bbox.max,
+//           2
+//         )}`
+//       );
+//       scene.add(gltf.scene);
+//       loadingBar.visible = false;
+//       renderer.setAnimationLoop(animate.bind(this));
+//     },
+//     function (xhr) {
+//       loadingBar.progress = xhr.loaded / xhr.total;
+//     },
+//     function (err) {
+//       console.log("An error happened");
+//     }
+//   );
+// }
+
+// function loadFBX() {
+//   const loader = new FBXLoader().setPath("/assets/");
+
+//   loader.load(
+//     "office-chair.fbx",
+//     function (object) {
+//       const chair = object;
+//       const bbox = new Box3().setFromObject(object);
+//       console.log(
+//         `min:${vector3ToString(bbox.min, 2)} - max:${vector3ToString(
+//           bbox.max,
+//           2
+//         )}`
+//       );
+//       scene.add(object);
+//       loadingBar.visible = false;
+//       renderer.setAnimationLoop(animate.bind(this));
+//     },
+//     function (xhr) {
+//       loadingBar.progress = xhr.loaded / xhr.total;
+//     },
+//     function (err) {
+//       console.log("An error happened");
+//     }
+//   );
+// }
+
+//     function resize() {
+//       camera.aspect = window.innerWidth / window.innerHeight;
+//       camera.updateProjectionMatrix();
+//       renderer.setSize(window.innerWidth, window.innerHeight);
+//     }
+
+//     function animate() {
+//       scene.rotateY(0.01);
+//       renderer.render(scene, camera);
+//     }
 //   }
 //   render() {
 //     return <div id="container" />;
@@ -179,18 +291,131 @@ export default class App extends Component {
 // }
 // -------------------------------------------------------------------------------------------------
 
-// Method 3
+// Way 3
 // -------------------------------------------------------------------------------------------------
 // function App() {
 //   useEffect(() => {
 //     const container = document.createElement("div");
 //     document.body.appendChild(container);
 
+//     const camera = new PerspectiveCamera(
+//       60,
+//       window.innerWidth / window.innerHeight,
+//       0.1,
+//       100
+//     );
+//     camera.position.set(0, 4, 14);
+
+//     const scene = new Scene();
+//     scene.background = new Color(0x090c17);
+
+//     const ambient = new HemisphereLight(0xffffff, 0xbbbbff, 0.3);
+//     scene.add(ambient);
+
+//     const light = new DirectionalLight();
+//     light.position.set(0.2, 1, 1);
+//     scene.add(light);
+
+//     const renderer = new WebGLRenderer({ antialias: true, alpha: true });
+//     renderer.setPixelRatio(window.devicePixelRatio);
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     renderer.outputEncoding = sRGBEncoding;
+//     renderer.physicallyCorrectLights = true;
+//     setEnvironment();
+//     container.appendChild(renderer.domElement);
+
+//     // Add code here
+//     const loadingBar = new LoadingBar();
+//     loadGLTF();
+
+//     const controls = new OrbitControls(camera, renderer.domElement);
+//     controls.target.set(0, 3.5, 0);
+//     controls.update();
+
 //     window.addEventListener("resize", resize.bind(this));
 
-//     function resize() {}
+//     function setEnvironment() {
+//       const loader = new RGBELoader();
+//       const pmremGenerator = new PMREMGenerator(renderer);
+//       pmremGenerator.compileEquirectangularShader();
+//       loader.load(
+//         "/assets/hdr/venice_sunset_1k.hdr",
+//         (texture) => {
+//           const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+//           pmremGenerator.dispose();
+//           scene.environment = envMap;
+//         },
+//         undefined,
+//         (err) => {
+//           console.error("An error occurred setting the environment");
+//         }
+//       );
+//     }
 
-//     function animate() {}
+//     function loadGLTF() {
+//       const loader = new GLTFLoader().setPath("/assets/");
+
+//       loader.load(
+//         "office-chair.glb",
+//         function (gltf) {
+//           const chair = gltf.scene;
+//           const bbox = new Box3().setFromObject(gltf.scene);
+//           console.log(
+//             `min:${vector3ToString(bbox.min, 2)} - max:${vector3ToString(
+//               bbox.max,
+//               2
+//             )}`
+//           );
+//           scene.add(gltf.scene);
+//           loadingBar.visible = false;
+//           renderer.setAnimationLoop(animate.bind(this));
+//         },
+//         function (xhr) {
+//           loadingBar.progress = xhr.loaded / xhr.total;
+//         },
+//         function (err) {
+//           console.log("An error happened");
+//         }
+//       );
+//     }
+
+//     function loadFBX() {
+//       const loader = new FBXLoader().setPath("/assets/");
+
+//       loader.load(
+//         "office-chair.fbx",
+//         function (object) {
+//           const chair = object;
+//           const bbox = new Box3().setFromObject(object);
+//           console.log(
+//             `min:${vector3ToString(bbox.min, 2)} - max:${vector3ToString(
+//               bbox.max,
+//               2
+//             )}`
+//           );
+//           scene.add(object);
+//           loadingBar.visible = false;
+//           renderer.setAnimationLoop(animate.bind(this));
+//         },
+//         function (xhr) {
+//           loadingBar.progress = xhr.loaded / xhr.total;
+//         },
+//         function (err) {
+//           console.log("An error happened");
+//         }
+//       );
+//     }
+
+//     function resize() {
+//       camera.aspect = window.innerWidth / window.innerHeight;
+//       camera.updateProjectionMatrix();
+//       renderer.setSize(window.innerWidth, window.innerHeight);
+//     }
+
+//     function animate() {
+//       scene.rotateY(0.01);
+//       renderer.render(scene, camera);
+//     }
 //   }, []);
 
 //   return <div id="container" />;
