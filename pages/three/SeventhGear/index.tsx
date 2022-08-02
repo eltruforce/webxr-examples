@@ -18,7 +18,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
 // import { VRButton } from "three/examples/jsm/webxr/VRButton";
-import { VRButton } from "./VRButton";
+import { VRButton } from "../../../components/three/SeventhGear/VRButton";
 
 // Way 1
 // -------------------------------------------------------------------------------------------------
