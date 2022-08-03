@@ -18,6 +18,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { VRButton } from "../../../components/three/EighthGear/VRButton";
+import "../../../libs/all";
 
 // Way 1
 // -------------------------------------------------------------------------------------------------
@@ -134,11 +135,91 @@ export default class App extends Component {
 //     const container = document.createElement("div");
 //     document.body.appendChild(container);
 
+//     const clock = new Clock();
+
+//     const camera = new PerspectiveCamera(
+//       50,
+//       window.innerWidth / window.innerHeight,
+//       0.1,
+//       100
+//     );
+//     camera.position.set(0, 1.6, 3);
+
+//     const scene = new Scene();
+//     scene.background = new Color(0x090c17);
+
+//     scene.add(new HemisphereLight(0x606060, 0x404040));
+
+//     const light = new DirectionalLight(0xffffff);
+//     light.position.set(1, 1, 1).normalize();
+//     scene.add(light);
+
+//     const renderer = new WebGLRenderer({ antialias: true });
+//     renderer.setPixelRatio(window.devicePixelRatio);
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     renderer.outputEncoding = sRGBEncoding;
+
+//     container.appendChild(renderer.domElement);
+
+//     const controls = new OrbitControls(camera, renderer.domElement);
+//     controls.target.set(0, 1.6, 0);
+//     controls.update();
+
+//     const stats = Stats();
+
+//     initScene();
+
+//     setupVR();
+
 //     window.addEventListener("resize", resize.bind(this));
 
-//     function resize() {}
+//     renderer.setAnimationLoop(animate.bind(this));
 
-//     function animate() {}
+//     function random(min, max) {
+//       return Math.random() * (max - min) + min;
+//     }
+
+//     function initScene() {
+//       const radius = 0.08;
+
+//       const room = new LineSegments(
+//         new BoxLineGeometry(6, 6, 6, 10, 10, 10),
+//         new LineBasicMaterial({ color: 0x808080 })
+//       );
+//       room.geometry.translate(0, 3, 0);
+//       scene.add(room);
+
+//       const geometry = new IcosahedronBufferGeometry(radius, 2);
+
+//       for (let i = 0; i < 200; i++) {
+//         const object = new Mesh(
+//           geometry,
+//           new MeshLambertMaterial({ color: Math.random() * 0xffffff })
+//         );
+
+//         object.position.x = random(-2, 2);
+//         object.position.y = random(-2, 2);
+//         object.position.z = random(-2, 2);
+
+//         room.add(object);
+//       }
+//     }
+
+//     function setupVR() {
+//       renderer.xr.enabled = true;
+//       const button = new VRButton(renderer);
+//     }
+
+//     function resize() {
+//       camera.aspect = window.innerWidth / window.innerHeight;
+//       camera.updateProjectionMatrix();
+//       renderer.setSize(window.innerWidth, window.innerHeight);
+//     }
+
+//     function animate() {
+//       stats.update();
+//       renderer.render(scene, camera);
+//     }
 //   }
 //   render() {
 //     return <div id="container" />;
@@ -153,11 +234,91 @@ export default class App extends Component {
 //     const container = document.createElement("div");
 //     document.body.appendChild(container);
 
+//     const clock = new Clock();
+
+//     const camera = new PerspectiveCamera(
+//       50,
+//       window.innerWidth / window.innerHeight,
+//       0.1,
+//       100
+//     );
+//     camera.position.set(0, 1.6, 3);
+
+//     const scene = new Scene();
+//     scene.background = new Color(0x090c17);
+
+//     scene.add(new HemisphereLight(0x606060, 0x404040));
+
+//     const light = new DirectionalLight(0xffffff);
+//     light.position.set(1, 1, 1).normalize();
+//     scene.add(light);
+
+//     const renderer = new WebGLRenderer({ antialias: true });
+//     renderer.setPixelRatio(window.devicePixelRatio);
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     renderer.outputEncoding = sRGBEncoding;
+
+//     container.appendChild(renderer.domElement);
+
+//     const controls = new OrbitControls(camera, renderer.domElement);
+//     controls.target.set(0, 1.6, 0);
+//     controls.update();
+
+//     const stats = Stats();
+
+//     initScene();
+
+//     setupVR();
+
 //     window.addEventListener("resize", resize.bind(this));
 
-//     function resize() {}
+//     renderer.setAnimationLoop(animate.bind(this));
 
-//     function animate() {}
+//     function random(min, max) {
+//       return Math.random() * (max - min) + min;
+//     }
+
+//     function initScene() {
+//       const radius = 0.08;
+
+//       const room = new LineSegments(
+//         new BoxLineGeometry(6, 6, 6, 10, 10, 10),
+//         new LineBasicMaterial({ color: 0x808080 })
+//       );
+//       room.geometry.translate(0, 3, 0);
+//       scene.add(room);
+
+//       const geometry = new IcosahedronBufferGeometry(radius, 2);
+
+//       for (let i = 0; i < 200; i++) {
+//         const object = new Mesh(
+//           geometry,
+//           new MeshLambertMaterial({ color: Math.random() * 0xffffff })
+//         );
+
+//         object.position.x = random(-2, 2);
+//         object.position.y = random(-2, 2);
+//         object.position.z = random(-2, 2);
+
+//         room.add(object);
+//       }
+//     }
+
+//     function setupVR() {
+//       renderer.xr.enabled = true;
+//       const button = new VRButton(renderer);
+//     }
+
+//     function resize() {
+//       camera.aspect = window.innerWidth / window.innerHeight;
+//       camera.updateProjectionMatrix();
+//       renderer.setSize(window.innerWidth, window.innerHeight);
+//     }
+
+//     function animate() {
+//       stats.update();
+//       renderer.render(scene, camera);
+//     }
 //   }, []);
 
 //   return <div id="container" />;
