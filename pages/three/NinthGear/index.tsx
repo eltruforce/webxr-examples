@@ -124,7 +124,7 @@ export default class App extends Component {
   setupXR = () => {
     this.renderer.xr.enabled = true;
 
-    const button = new VRButton(this.renderer);
+    const button = new VRButton(this.renderer, undefined);
 
     this.controllers = this.buildControllers();
   };
@@ -267,7 +267,7 @@ export default class App extends Component {
 //     function setupXR() {
 //       renderer.xr.enabled = true;
 
-//       const button = new VRButton(renderer);
+//       const button = new VRButton(renderer, undefined);
 
 //       const controllers = buildControllers();
 //     }
@@ -413,7 +413,7 @@ export default class App extends Component {
 //     function setupXR() {
 //       renderer.xr.enabled = true;
 
-//       const button = new VRButton(renderer);
+//       const button = new VRButton(renderer, undefined);
 
 //       const controllers = buildControllers();
 //     }
