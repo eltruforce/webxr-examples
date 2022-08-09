@@ -39,6 +39,10 @@ function HomePage() {
           Ninth Gear&emsp; <a href="three/NinthGear">go three!</a>&emsp;
           <a href="react-three-fiber/NinthGear">go react-three-fiber!</a>
         </li>
+        <li>
+          Tenth Gear&emsp; <a href="three/TenthGear">go three!</a>&emsp;
+          <a href="react-three-fiber/TenthGear">go react-three-fiber!</a>
+        </li>
       </ul>
     </div>
   );
