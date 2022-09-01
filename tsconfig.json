@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "libs/all.js"  ],
+, "libs/all.js", "components/three/ThirdGear/files.ts"  ],
   "exclude": [
     "node_modules"
   ]
