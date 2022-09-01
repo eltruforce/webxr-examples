@@ -144,12 +144,6 @@ export default class App extends Component {
 
     // console.log(position);
 
-    // material.push(new MeshBasicMaterial({ color: 0xffffff }));
-    // material.push(new MeshBasicMaterial({ color: 0xff0000 }));
-    // material.push(new MeshBasicMaterial({ color: "yellow" }));
-    // material.push(new MeshBasicMaterial({ color: "blue" }));
-    // material.push(new MeshBasicMaterial({ color: "navy" }));
-
     const sphere = new Mesh(geometry, material);
 
     for (let i = 0, l = position.count; i < l; i++) {
