@@ -5,6 +5,7 @@ import {
   BoxBufferGeometry,
   BufferAttribute,
   BufferGeometry,
+  CircleBufferGeometry,
   Color,
   DirectionalLight,
   DoubleSide,
@@ -90,15 +91,55 @@ export default class App extends Component {
       images.length
     );
 
-    const material = new MeshBasicMaterial({ color: 0xa1a1a1, side: DoubleSide });
+    // sphere.setAttribute(
+    //   "zoom",
+    //   new BufferAttribute(new Float32Array(sphere.attributes.id.count), 1)
+    // );
+    // sphere.setAttribute("uv2", sphere.attributes.uv.clone());
+    // sphere.computeVertexNormals();
+    // this.computeTileUVs(sphere, texSize, sphere.attributes.uv, uvZoom);
+    // this.computeTileUVs(sphere, texSize, sphere.attributes.uv2, uvZoom2);
 
+    const material = new MeshBasicMaterial({ color: 0xa1a1a1, side: BackSide });
+    // new TextureLoader().load("/all_in_one.png", function (map) {
+    //   material.color = null;
+    //   material.map = map;
+    //   material.needsUpdate = true;
+    // });
+
+    // console.log(images);
     this.mesh = new Mesh(sphere, material);
 
     this.scene.add(this.mesh);
 
+    const floor = new CircleBufferGeometry(radius, 50);
+    const floorMaterial = new MeshBasicMaterial({
+      color: 0xa1a1a1,
+      side: DoubleSide,
+    });
+    const meshFloor = new Mesh(floor, floorMaterial);
+
+    meshFloor.rotation.set(-Math.PI / 2, 0, 0);
+    this.scene.add(meshFloor);
+
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     window.addEventListener("resize", this.resize.bind(this));
+  };
+
+  computeTileUVs = (sphere, texSize, aUv, uvZoom) => {
+    for (var i = 0; i < sphere.attributes.id.count; i++) {
+      var id = sphere.attributes.id.array[i];
+      var j = Math.floor(id / texSize);
+      var q = (1 - 2 * uvZoom) / texSize;
+      var u0 = (id + uvZoom) / texSize - j;
+      var v0 = 1 - (j + 1 - uvZoom) / texSize;
+
+      aUv.array[2 * i] *= q;
+      aUv.array[2 * i] += u0;
+      aUv.array[2 * i + 1] *= q;
+      aUv.array[2 * i + 1] += v0;
+    }
   };
 
   resize = () => {

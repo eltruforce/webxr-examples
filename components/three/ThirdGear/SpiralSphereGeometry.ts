@@ -64,7 +64,7 @@ const SpiralSphereGeometry = (
       }
     }
   }
-  const iMax =
+  var iMax =
     1 +
     Math.floor(
       (((tiles - 2) * tileX) / 4) *
