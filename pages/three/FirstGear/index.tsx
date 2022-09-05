@@ -1,29 +1,15 @@
 import { Component, useEffect } from "react";
 import {
-  AmbientLight,
-  BackSide,
-  BoxBufferGeometry,
-  BufferAttribute,
-  BufferGeometry,
   Color,
   DirectionalLight,
   DoubleSide,
-  GridHelper,
   HemisphereLight,
   Mesh,
   MeshBasicMaterial,
-  MeshLambertMaterial,
-  MeshNormalMaterial,
-  MeshPhongMaterial,
-  MeshStandardMaterial,
   PerspectiveCamera,
   PlaneGeometry,
-  PointLight,
   Scene,
-  SphereBufferGeometry,
   SphereGeometry,
-  Texture,
-  TextureLoader,
   Vector3,
   WebGLRenderer,
 } from "three";
@@ -68,91 +54,48 @@ export default class App extends Component {
     this.renderer.setAnimationLoop(this.animate.bind(this));
 
     const geometry = new SphereGeometry(1, 50, 25);
-    // const loader = new TextureLoader();
-    // const texture = loader.load("/sky.png");
-    // const material = new MeshPhongMaterial({ map: texture });
-    // const dome = new Mesh(geometry, material);
-    // dome.material.side = BackSide;
-
-    // this.mesh = new Mesh(geometry, material);
-    // this.scene.add(this.mesh);
-
-    // const controls = new OrbitControls(this.camera, this.renderer.domElement);
-
-    // window.addEventListener("resize", this.resize.bind(this));
-
     const material = new MeshBasicMaterial({
       color: "#A9A9A9",
       wireframe: true,
     });
+    this.mesh = new Mesh(geometry, material);
+    this.scene.add(this.mesh);
 
-    // const highlight = new Mesh(
-    //   new PlaneGeometry(0.2, 0.2),
-    //   new MeshBasicMaterial({ side: DoubleSide })
-    // );
-    // // highlight.rotateX(-Math.PI / 2);
-    // highlight.position.set(0.1, 0.1, 1);
-    // this.scene.add(highlight);
-
-    var planes = [];
-
-    var spriteResponse = [];
-    spriteResponse[0] = {
-      ID: 1,
-      x: 0.5831503868103027,
-      y: 0.80901700258255,
-      z: 0.07366902381181717,
-    };
-    // // spriteResponse[1] = { ID: 2, x: 0, y: 0.1, z: 0 };
-    // // spriteResponse[2] = { ID: 3, x: 0, y: 0.5, z: 0 };
-    // // spriteResponse[3] = { ID: 4, x: 0.5, y: 0, z: 0 };
-    // // spriteResponse[4] = { ID: 5, x: 0.25, y: 0.5, z: 0 };
-
-    for (var i = 0; i < spriteResponse.length; i++) {
-      const material_plane = new MeshBasicMaterial({
-        color: 0xffffff,
-        side: DoubleSide,
-      });
-      material_plane.needsUpdate = true;
-      const geometry_plane = new PlaneGeometry(0.1, 0.1);
-      const plane = new Mesh(geometry_plane, material_plane);
-
-      plane.position.set(
-        spriteResponse[i].x,
-        spriteResponse[i].y,
-        spriteResponse[i].z
-      );
-
-      this.scene.add(plane);
-
-      planes.push(plane);
-
-      this.camera.updateMatrixWorld();
-      // var vector = this.camera.position.clone();
-
-      // plane.lookAt(vector);
-      // plane.userData = { URL: "http://stackoverflow.com" };
-    }
-
-    // const material = [];
-    const vertices = geometry.attributes.position.array;
+    const vertices = geometry.attributes.position.array as Array<number>;
 
     const length = vertices.length;
 
-    const position = geometry.attributes.position;
-    const vector = new Vector3();
+    var lookDirection = new Vector3();
+    var target = new Vector3();
 
-    // console.log(position);
+    const planeGeometry = new PlaneGeometry(0.1, 0.1, 16, 16);
+    const planeMaterial = new MeshBasicMaterial({
+      color: 0xffffff,
+      side: DoubleSide,
+    });
 
-    const sphere = new Mesh(geometry, material);
+    for (let i = 0, l = length; i < l; i += 3) {
+      if (Math.random() * 10 > 2.9956) {
+        const planeMesh = new Mesh(planeGeometry, planeMaterial);
 
-    for (let i = 0, l = position.count; i < l; i++) {
-      vector.fromBufferAttribute(position, i);
-      vector.applyMatrix4(sphere.matrixWorld);
-      console.log(vector);
+        const v = new Vector3(vertices[i], vertices[i + 1], vertices[i + 2]);
+
+        // vertices[i] = v.x;
+        // vertices[i + 1] = v.y;
+        // vertices[i + 2] = v.z;
+
+        // planeMesh.position.set( v.x, v.y, v.z );
+        planeMesh.position.copy(v);
+
+        lookDirection
+          .subVectors(planeMesh.position, this.mesh.position)
+          .normalize();
+        target.copy(planeMesh.position).add(lookDirection);
+        planeMesh.lookAt(target);
+
+        this.scene.add(planeMesh);
+      }
     }
-
-    this.scene.add(sphere);
 
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
 
