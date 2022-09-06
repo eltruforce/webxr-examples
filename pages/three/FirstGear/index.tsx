@@ -65,8 +65,8 @@ export default class App extends Component {
 
     const length = vertices.length;
 
-    var lookDirection = new Vector3();
-    var target = new Vector3();
+    const lookDirection = new Vector3();
+    const target = new Vector3();
 
     const planeGeometry = new PlaneGeometry(0.1, 0.1, 16, 16);
     const planeMaterial = new MeshBasicMaterial({
@@ -87,6 +87,7 @@ export default class App extends Component {
         // planeMesh.position.set( v.x, v.y, v.z );
         planeMesh.position.copy(v);
 
+        console.log(planeMesh.position);
         lookDirection
           .subVectors(planeMesh.position, this.mesh.position)
           .normalize();
