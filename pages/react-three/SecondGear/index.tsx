@@ -5,13 +5,13 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export default function App() {
   function Box() {
-    const mesh = useRef<Mesh>(null!);
+    const boxRef = useRef<Mesh>(null!);
 
     useFrame(() => {
-      mesh.current.rotateY(0.01);
+      boxRef.current.rotateY(0.01);
     });
     return (
-      <mesh ref={mesh}>
+      <mesh ref={boxRef}>
         <boxBufferGeometry />
         <meshStandardMaterial color={0x3657c3} />
       </mesh>
