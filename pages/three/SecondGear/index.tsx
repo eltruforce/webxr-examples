@@ -1,7 +1,7 @@
 import { Container } from "@mantine/core";
-import { Component, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
-  BoxBufferGeometry,
+  CircleBufferGeometry,
   Color,
   DirectionalLight,
   HemisphereLight,
@@ -43,9 +43,7 @@ const App = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
 
-    renderer.setAnimationLoop(render);
-
-    const geometry = new BoxBufferGeometry();
+    const geometry = new CircleBufferGeometry(1, 32, 0, Math.PI);
     const material = new MeshStandardMaterial({ color: 0x3657c3 });
 
     const mesh = new Mesh(geometry, material);
@@ -53,6 +51,8 @@ const App = () => {
     scene.add(mesh);
 
     const controls = new OrbitControls(camera, renderer.domElement);
+
+    renderer.setAnimationLoop(render);
 
     window.addEventListener("resize", resize);
 
@@ -75,7 +75,7 @@ const App = () => {
   }, []);
 
   return (
-    <Layout title="First Gear (3JS)">
+    <Layout title="Second Gear (3JS)">
       <Container
         ref={containerRef}
         style={{

@@ -1,11 +1,11 @@
-import { Container, Box as ContainerBox } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Component, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Mesh } from "three";
 import Layout from "../../../components/layouts/article";
 
-const Box = () => {
+const Circle = () => {
   const meshRef = useRef<Mesh>(null!);
 
   useFrame(() => {
@@ -13,10 +13,9 @@ const Box = () => {
       meshRef.current.rotateY(0.01);
     }
   });
-
   return (
     <mesh ref={meshRef}>
-      <boxBufferGeometry />
+      <circleBufferGeometry args={[1, 32, 0, Math.PI]} />
       <meshStandardMaterial color={0x3657c3} />
     </mesh>
   );
@@ -26,8 +25,8 @@ const App = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Layout title="First Gear (R3F)">
-      <ContainerBox
+    <Layout title="Second Gear (R3F)">
+      <Box
         ref={containerRef}
         style={{
           width: "100vw",
@@ -52,10 +51,10 @@ const App = () => {
             intensity={0.3}
           />
           <directionalLight position={[0.2, 1, 1]} />
-          <Box />
+          <Circle />
           <OrbitControls />
         </Canvas>
-      </ContainerBox>
+      </Box>
     </Layout>
   );
 };
