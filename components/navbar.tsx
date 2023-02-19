@@ -20,6 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { BiMoon, BiSun } from "react-icons/bi";
 import { IoLogoGithub } from "react-icons/io5";
+import Logo from "./logo";
 import ThemeToggleButton from "./theme-toggle-button";
 
 const useStyles = createStyles((theme) => ({
@@ -93,9 +94,9 @@ const Navbar = (props) => {
   const [opened, { toggle, close }] = useDisclosure(false);
 
   return (
-    <Header height={60}  className={classes.root}>
+    <Header height={60} className={classes.root}>
       <Container className={classes.header}>
-        LOGO
+        <Logo />
         <Group spacing={5} className={classes.links}>
           <Link href="/" scroll={false} passHref>
             <Anchor className={classes.link}>Gears</Anchor>
