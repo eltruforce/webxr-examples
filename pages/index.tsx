@@ -1,50 +1,37 @@
+import { Group, Title, List, Anchor, Container, AppShell } from "@mantine/core";
+
+import Link from "next/link";
+
 function HomePage() {
   return (
-    <div>
-      <h5>WebXR examples links</h5>
-      <ul>
-        <li>
-          First Gear&emsp; <a href="three/FirstGear">go three!</a>&emsp;
-          <a href="react-three/FirstGear">go react-three!</a>
-        </li>
-        <li>
-          Second Gear&emsp; <a href="three/SecondGear">go three!</a>&emsp;
-          <a href="react-three/SecondGear">go react-three!</a>
-        </li>
-        <li>
-          Third Gear&emsp; <a href="three/ThirdGear">go three!</a>&emsp;
-          <a href="react-three/ThirdGear">go react-three!</a>
-        </li>
-        <li>
-          Fourth Gear&emsp; <a href="three/FourthGear">go three!</a>&emsp;
-          <a href="react-three/FourthGear">go react-three!</a>
-        </li>
-        <li>
-          Fifth Gear&emsp; <a href="three/FifthGear">go three!</a>&emsp;
-          <a href="react-three/FifthGear">go react-three!</a>
-        </li>
-        <li>
-          Sixth Gear&emsp; <a href="three/SixthGear">go three!</a>&emsp;
-          <a href="react-three/SixthGear">go react-three!</a>
-        </li>
-        <li>
-          Seventh Gear&emsp; <a href="three/SeventhGear">go three!</a>&emsp;
-          <a href="react-three/SeventhGear">go react-three!</a>
-        </li>
-        <li>
-          Eighth Gear&emsp; <a href="three/EighthGear">go three!</a>&emsp;
-          <a href="react-three/EighthGear">go react-three!</a>
-        </li>
-        <li>
-          Ninth Gear&emsp; <a href="three/NinthGear">go three!</a>&emsp;
-          <a href="react-three/NinthGear">go react-three!</a>
-        </li>
-        <li>
-          Tenth Gear&emsp; <a href="three/TenthGear">go three!</a>&emsp;
-          <a href="react-three/TenthGear">go react-three!</a>
-        </li>
-      </ul>
-    </div>
+    <AppShell>
+      <Title align="center" mb="xl" mt="xl" pb="xl">
+        Learn about WebXR with ThreeJS and React Three Fiber
+      </Title>
+      <Title align="center" order={3} mb="sm">
+        Gear links
+      </Title>
+      <List style={{ listStyleType: "none", textAlign: "center" }} spacing="xs">
+        <List.Item>
+          <Group>
+            First Gear
+            <Anchor href="three/FirstGear">Go 3JS!</Anchor>
+            {/* Observation: In the case of R3F you can use Link component from NextJS because the render is not affected when navigate across the page. This is due to the fact that React Three Fiber is built on top of React, which means that it uses React's virtual DOM to manage its rendering. In contrast, 3JS does not use React, so it's not aware of the virtual DOM. When you navigate using Link in NextJS can cause performance issues.*/}
+            {/* <Anchor href="react-three/FirstGear">Go R3F!</Anchor> */}
+            <Link href="react-three/FirstGear" passHref scroll={false}>
+              <Anchor> Go R3F!</Anchor>
+            </Link>
+          </Group>
+        </List.Item>
+        <List.Item>
+          <Group>
+            Second Gear
+            <Anchor href="three/SecondGear">Go 3JS!</Anchor>
+            <Anchor href="react-three/SecondGear">Go R3F!</Anchor>
+          </Group>
+        </List.Item>
+      </List>
+    </AppShell>
   );
 }
 
