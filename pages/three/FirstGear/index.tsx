@@ -12,6 +12,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Layout from "../../../components/layouts/article";
 
 const App = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -74,14 +75,16 @@ const App = () => {
   }, []);
 
   return (
-    <Container
-      ref={containerRef}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    />
+    <Layout title="First Gear (3JS)">
+      <Container
+        ref={containerRef}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
+    </Layout>
   );
 };
 
