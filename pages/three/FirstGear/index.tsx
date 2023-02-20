@@ -1,5 +1,5 @@
-import { Container } from "@mantine/core";
-import { Component, useEffect, useRef } from "react";
+import { Box } from "@mantine/core";
+import { useEffect, useRef } from "react";
 import {
   BoxBufferGeometry,
   Color,
@@ -76,9 +76,11 @@ const App = () => {
 
   return (
     <Layout title="First Gear (3JS)">
-      <Container
+      <Box
         ref={containerRef}
         style={{
+          width: "100vw",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

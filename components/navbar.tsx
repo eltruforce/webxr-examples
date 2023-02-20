@@ -1,18 +1,12 @@
 import {
   Anchor,
-  Box,
   Burger,
-  Button,
   Container,
   createStyles,
-  Flex,
   Group,
   Header,
-  Menu,
   Paper,
   Switch,
-  Text,
-  Title,
   Transition,
   useMantineColorScheme,
 } from "@mantine/core";

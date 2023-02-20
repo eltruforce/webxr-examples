@@ -1,4 +1,4 @@
-import { Box, Container } from "@mantine/core";
+import { Box } from "@mantine/core";
 import Head from "next/head";
 
 import Navbar from "../navbar";

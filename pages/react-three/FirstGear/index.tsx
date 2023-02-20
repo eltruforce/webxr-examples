@@ -1,7 +1,7 @@
-import { Container, Box as ContainerBox } from "@mantine/core";
+import { Box as ContainerBox } from "@mantine/core";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Component, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Mesh } from "three";
 import Layout from "../../../components/layouts/article";
 

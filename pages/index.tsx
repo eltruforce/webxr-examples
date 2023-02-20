@@ -1,4 +1,4 @@
-import { Group, Title, List, Anchor, Container, AppShell } from "@mantine/core";
+import { Group, Title, List, Anchor, AppShell } from "@mantine/core";
 
 import Link from "next/link";
 

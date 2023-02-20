@@ -1,17 +1,14 @@
-const ETprintIcon = props => {
+const ETprintIcon = (props) => {
   return (
     <svg
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
-      // xmlns:xlink="http://www.w3.org/1999/xlink"
       x="0px"
       y="0px"
       width="25px"
       height="25px"
       viewBox="10 -10 160 215"
-      // enable-background="new 0 0 160 215"
-      // xml:space="preserve"
     >
       <image
         id="image0"
@@ -62,7 +59,7 @@ N1QyMjowMjowNCswMDowMLpLppAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMDEtMjdUMjI6MDI6
 MDQrMDA6MDDLFh4sAAAAAElFTkSuQmCC"
       />
     </svg>
-  )
-}
+  );
+};
 
-export default ETprintIcon
+export default ETprintIcon;

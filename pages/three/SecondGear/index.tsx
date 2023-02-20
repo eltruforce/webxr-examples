@@ -1,4 +1,4 @@
-import { Container } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { useEffect, useRef } from "react";
 import {
   CircleBufferGeometry,
@@ -76,9 +76,11 @@ const App = () => {
 
   return (
     <Layout title="Second Gear (3JS)">
-      <Container
+      <Box
         ref={containerRef}
         style={{
+          width: "100vw",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
