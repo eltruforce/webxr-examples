@@ -99,10 +99,10 @@ const App = () => {
           />
 
           {/*Uncomment the next lines see FBX loader */}
-          {/* <Environment files="/assets/hdr/venice_sunset_1k.hdr" />
-          <LoadFBX /> */}
+          <Environment files="/assets/hdr/venice_sunset_1k.hdr" />
+          <LoadFBX />
 
-          <LoadGLTF />
+          {/* <LoadGLTF /> */}
           <OrbitControls target={[0, 3.5, 0]} />
         </Canvas>
       </Box>
