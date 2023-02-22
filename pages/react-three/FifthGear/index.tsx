@@ -32,7 +32,7 @@ const LoadGLTF = () => {
   loadingBar.progress = progress / 100;
 
   useFrame(() => {
-    if (gltf.scene) {
+    if (gltf.scene && progress != 0 && progress <= 100) {
       loadingBar.visible = false;
       gltf.scene.rotateY(0.01);
     }
@@ -54,7 +54,7 @@ const LoadFBX = () => {
   loadingBar.progress = progress / 100;
 
   useFrame(() => {
-    if (object) {
+    if (object && progress != 0 && progress <= 100) {
       loadingBar.visible = false;
       object.rotateY(0.01);
     }
