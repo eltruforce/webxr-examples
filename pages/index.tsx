@@ -5,7 +5,7 @@ import Link from "next/link";
 function HomePage() {
   return (
     <AppShell>
-      <Title align="center" mb="xl" mt="xl" pb="xl">
+      <Title align="center" mb="xl"  pb="xl">
         Learn about WebXR with ThreeJS and React Three Fiber
       </Title>
       <Title align="center" order={3} mb="sm">
