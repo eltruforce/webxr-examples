@@ -58,7 +58,7 @@ const LoadFBX = () => {
 const Loader = () => {
   const { active, progress, errors, item, loaded, total } = useProgress();
 
-  return active ? (
+  return active && progress != 0 ? (
     <Center
       sx={{
         position: "fixed",
