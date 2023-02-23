@@ -1,13 +1,17 @@
-import { Box } from "@mantine/core";
-import { Environment, OrbitControls, useProgress } from "@react-three/drei";
+import { Box, Center, Progress } from "@mantine/core";
+import {
+  Environment,
+  OrbitControls,
+  useFBX,
+  useProgress,
+} from "@react-three/drei";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { useRef, useState } from "react";
+import { Suspense, useRef } from "react";
 import { Box3 } from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import Layout from "../../../components/layouts/article";
 import { vector3ToString } from "../../../lib/DebugUtils";
-import { LoadingBar } from "../../../lib/LoadingBar";
 
 const LoadGLTF = () => {
   const gltf = useLoader(GLTFLoader, "/assets/office-chair.glb");
@@ -26,14 +30,8 @@ const LoadGLTF = () => {
     }
   });
 
-  const { progress } = useProgress();
-
-  const loadingBar = LoadingBar();
-  loadingBar.progress = progress / 100;
-
   useFrame(() => {
-    if (gltf.scene && progress != 0 && progress <= 100) {
-      loadingBar.visible = false;
+    if (gltf.scene) {
       gltf.scene.rotateY(0.01);
     }
   });
@@ -42,20 +40,14 @@ const LoadGLTF = () => {
 };
 
 const LoadFBX = () => {
-  const object = useLoader(FBXLoader, "/assets/office-chair.fbx");
+  const object = useFBX("/assets/office-chair.fbx");
   const bbox = new Box3().setFromObject(object);
   console.log(
     `min:${vector3ToString(bbox.min, 2)} - max:${vector3ToString(bbox.max, 2)}`
   );
 
-  const { progress } = useProgress();
-
-  const loadingBar = LoadingBar();
-  loadingBar.progress = progress / 100;
-
   useFrame(() => {
-    if (object && progress != 0 && progress <= 100) {
-      loadingBar.visible = false;
+    if (object) {
       object.rotateY(0.01);
     }
   });
@@ -63,49 +55,92 @@ const LoadFBX = () => {
   return <primitive object={object} />;
 };
 
+const Loader = () => {
+  const { active, progress, errors, item, loaded, total } = useProgress();
+
+  return active ? (
+    <Center
+      sx={{
+        position: "fixed",
+        top: 0,
+        width: "100%",
+        height: "100%",
+        background: "#000",
+        opacity: 0.7,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1111,
+      }}
+    >
+      <Progress
+        styles={{
+          root: {
+            background: "#aaa",
+            width: "50%",
+            minWidth: "250px",
+            borderRadius: "10px",
+            height: "15px",
+          },
+          bar: {
+            backgroundColor: "#22a",
+            width: "50%",
+            borderRadius: "10px",
+            height: "100%",
+          },
+        }}
+        value={progress}
+      />
+    </Center>
+  ) : null;
+};
+
 const App = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <Layout title="Fifth Gear (R3F)">
-      <Box
-        ref={containerRef}
-        style={{
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Canvas
-          camera={{
-            fov: 60,
-            far: 100,
-            position: [0, 4, 14],
+      <Suspense fallback={<Loader />}>
+        <Box
+          ref={containerRef}
+          style={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-          gl={{ antialias: true, alpha: true }}
         >
-          <color attach="background" args={[0x090c17]} />
-          <hemisphereLight
-            color={0xffffff}
-            groundColor={0xbbbbff}
-            intensity={0.5}
-          />
-          <directionalLight
-            color={0xffffff}
-            intensity={1.5}
-            position={[0.2, 1, 1]}
-          />
+          <Canvas
+            camera={{
+              fov: 60,
+              far: 100,
+              position: [0, 4, 14],
+            }}
+            gl={{ antialias: true, alpha: true }}
+          >
+            <color attach="background" args={[0x090c17]} />
+            <hemisphereLight
+              color={0xffffff}
+              groundColor={0xbbbbff}
+              intensity={0.5}
+            />
+            <directionalLight
+              color={0xffffff}
+              intensity={1.5}
+              position={[0.2, 1, 1]}
+            />
 
-          {/*Uncomment the next lines see FBX loader */}
-          <Environment files="/assets/hdr/venice_sunset_1k.hdr" />
-          <LoadFBX />
+            {/*Uncomment the next lines see FBX loader */}
+            <Environment files="/assets/hdr/venice_sunset_1k.hdr" />
+            <LoadFBX />
 
-          {/* <LoadGLTF /> */}
-          <OrbitControls target={[0, 3.5, 0]} />
-        </Canvas>
-      </Box>
+            {/* <LoadGLTF /> */}
+
+            <OrbitControls target={[0, 3.5, 0]} />
+          </Canvas>
+        </Box>
+      </Suspense>
     </Layout>
   );
 };
