@@ -5,7 +5,7 @@ import Navbar from "../navbar";
 
 const Main = ({ children, router }) => {
   return (
-    <Box pb={24}>
+    <Box>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>ElTruforce's WebXR Examples</title>
