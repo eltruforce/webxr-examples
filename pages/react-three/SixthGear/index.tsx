@@ -4,16 +4,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { VRButton, XR } from "@react-three/xr";
 import { useMemo, useRef } from "react";
 import {
-  Color,
-  DataTexture,
+  BufferAttribute,
   IcosahedronBufferGeometry,
-  InstancedBufferAttribute,
-  InstancedBufferGeometry,
-  InstancedMesh,
   LineSegments,
-  Mesh,
-  Object3D,
-  RGBFormat,
 } from "three";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
 import Layout from "../../../components/layouts/article";
@@ -43,79 +36,26 @@ const Room = () => {
   return <CustomBoxLineGeometry args={[6, 6, 6, 10, 10, 10]} />;
 };
 
-// const Icosahedrons = () => {
-//   const radius = 0.08;
-//   const numInstances = 200;
-
-//   const geometry = new IcosahedronBufferGeometry(radius, 2);
-
-//   const random = (min: number, max: number) =>
-//     Math.random() * (max - min) + min;
-
-//   const icosahedrons = Array.from({ length: numInstances }, (_, i) => (
-//     <mesh
-//       key={i}
-//       position={[random(-2, 2), random(-2, 2), random(-2, 2)]}
-//       geometry={geometry}
-//     >
-//       <meshLambertMaterial color={Math.random() * 0xffffff} />
-//     </mesh>
-//   ));
-
-//   return <>{icosahedrons}</>;
-// };
-
 const Icosahedrons = () => {
   const radius = 0.08;
   const numInstances = 200;
 
-  const geometry = useMemo(() => {
-    const icosahedronGeometry = new IcosahedronBufferGeometry(radius, 2);
+  const geometry = new IcosahedronBufferGeometry(radius, 2);
 
-    const tempPositions = [];
-    for (let i = 0; i < numInstances; i++) {
-      tempPositions.push(
-        Math.random() * 4 - 2,
-        Math.random() * 4 - 2,
-        Math.random() * 4 - 2
-      );
-    }
+  const random = (min: number, max: number) =>
+    Math.random() * (max - min) + min;
 
-    const tempColors = [];
-    for (let i = 0; i < numInstances; i++) {
-      tempColors.push(Math.random(), Math.random(), Math.random());
-    }
+  const icosahedrons = Array.from({ length: numInstances }, (_, i) => (
+    <mesh
+      key={i}
+      position={[random(-2, 2), random(-2, 2), random(-2, 2)]}
+      geometry={geometry}
+    >
+      <meshLambertMaterial color={Math.random() * 0xffffff} />
+    </mesh>
+  ));
 
-    const instancedGeometry = new InstancedBufferGeometry().copy(
-      icosahedronGeometry
-    );
-    instancedGeometry.setAttribute(
-      "instancePosition",
-      new InstancedBufferAttribute(new Float32Array(tempPositions), 3)
-    );
-    instancedGeometry.setAttribute(
-      "instanceColor",
-      new InstancedBufferAttribute(new Float32Array(tempColors), 3)
-    );
-
-    return instancedGeometry;
-  }, []);
-
-  const meshRef = useRef<InstancedMesh>(null);
-
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += 0.005;
-      meshRef.current.rotation.y += 0.005;
-      meshRef.current.rotation.z += 0.005;
-    }
-  });
-
-  return (
-    <instancedMesh ref={meshRef} args={[geometry, null, numInstances]}>
-      <meshLambertMaterial vertexColors />
-    </instancedMesh>
-  );
+  return <>{icosahedrons}</>;
 };
 
 const App = () => {
