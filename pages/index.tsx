@@ -51,6 +51,13 @@ function HomePage() {
             <Anchor href="react-three/FifthGear">Go R3F!</Anchor>
           </Group>
         </List.Item>
+        <List.Item>
+          <Group>
+            Sixth Gear
+            <Anchor href="three/SixthGear">Go 3JS!</Anchor>
+            <Anchor href="react-three/SixthGear">Go R3F!</Anchor>
+          </Group>
+        </List.Item>
       </List>
     </AppShell>
   );
