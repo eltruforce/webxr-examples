@@ -1,11 +1,17 @@
 import { Box as ContainerBox } from "@mantine/core";
 import { OrbitControls, Stats } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { VRButton, XR } from "@react-three/xr";
-import { useRef } from "react";
-import { IcosahedronBufferGeometry, LineSegments } from "three";
+import { XR } from "@react-three/xr";
+import { useRef, useState } from "react";
+import { IcosahedronBufferGeometry, LineSegments, WebGLRenderer } from "three";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
 import Layout from "../../../components/layouts/article";
+import CustomVRButton from "../../../components/react-three/SeventhGear/VRButton";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faVrCardboard } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+library.add(faVrCardboard);
 
 const CustomBoxLineGeometry = ({
   args,
@@ -57,8 +63,10 @@ const Icosahedrons = () => {
 const App = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [gl, setGL] = useState<WebGLRenderer | null>(null);
+
   return (
-    <Layout title="Sixth Gear (R3F)">
+    <Layout title="Seventh Gear (R3F)">
       <ContainerBox
         ref={containerRef}
         style={{
@@ -72,7 +80,7 @@ const App = () => {
           alignItems: "center",
         }}
       >
-        <VRButton />
+        <CustomVRButton />
         <Canvas
           camera={{
             fov: 50,

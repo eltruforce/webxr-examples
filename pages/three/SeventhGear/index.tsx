@@ -2,13 +2,13 @@ import dynamic from "next/dynamic";
 import Layout from "../../../components/layouts/article";
 
 const ThreeComponent = dynamic(
-  () => import("../../../components/three/SixthGear/SixthGearThreeComponent"),
+  () => import("../../../components/three/SeventhGear/SeventhGearThreeComponent"),
   { ssr: false }
 );
 
 const App = () => {
   return (
-    <Layout title="Sixth Gear (3JS)">
+    <Layout title="Seventh Gear (3JS)">
       <ThreeComponent />
     </Layout>
   );
