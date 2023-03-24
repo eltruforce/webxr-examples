@@ -1,7 +1,7 @@
 import { Box as ContainerBox } from "@mantine/core";
 import { OrbitControls, Stats } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { XR } from "@react-three/xr";
+import { Controllers, XR } from "@react-three/xr";
 import { useRef } from "react";
 import { IcosahedronBufferGeometry, LineSegments } from "three";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
@@ -64,7 +64,7 @@ const App = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Layout title="Seventh Gear (R3F)">
+    <Layout title="Eighth Gear (R3F)">
       <ContainerBox
         ref={containerRef}
         style={{
@@ -89,6 +89,7 @@ const App = () => {
           gl={{ antialias: true }}
         >
           <XR>
+            <Controllers />
             <color attach="background" args={[0x090c17]} />
             <hemisphereLight color={0x606060} groundColor={0x404040} />
             <directionalLight position={[1, 1, 1]} color={0xffffff} />

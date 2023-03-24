@@ -1,23 +1,29 @@
 import { Box } from "@mantine/core";
 import { useEffect, useRef } from "react";
 import {
+  BufferGeometry,
   Color,
   DirectionalLight,
   HemisphereLight,
   IcosahedronBufferGeometry,
+  Line,
   LineBasicMaterial,
   LineSegments,
+  Matrix4,
   Mesh,
   MeshLambertMaterial,
   PerspectiveCamera,
+  Raycaster,
   Scene,
   sRGBEncoding,
+  Vector3,
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
 import { VRButton } from "../VRButton";
+import { XRControllerModelFactory } from "three/examples/jsm/webxr/XRControllerModelFactory";
 import "../../../lib/all";
 
 const App = () => {
@@ -58,6 +64,12 @@ const App = () => {
 
     const stats = Stats();
     container.appendChild(stats.dom);
+
+    const raycaster = new Raycaster();
+    const workingMatrix = new Matrix4();
+    const workingVectcor = new Vector3();
+
+    let controllers: any[];
 
     initScene();
     setupVR();
@@ -100,7 +112,41 @@ const App = () => {
       renderer.xr.enabled = true;
 
       VRButton({ renderer });
+
+      controllers = buildControllers();
     }
+
+    function buildControllers() {
+      const controllerModelFactory = new XRControllerModelFactory();
+
+      const geometry = new BufferGeometry().setFromPoints([
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, -1),
+      ]);
+
+      const line = new Line(geometry);
+      line.name = "line";
+      line.scale.z = 10;
+
+      const controllers = [];
+
+      for (let i = 0; i <= 1; i++) {
+        const controller = renderer.xr.getController(i);
+        controller.add(line.clone());
+        controller.userData.selectPressed = false;
+        scene.add(controller);
+
+        controllers.push(controller);
+
+        const grip = renderer.xr.getControllerGrip(i);
+        grip.add(controllerModelFactory.createControllerModel(grip));
+        scene.add(grip);
+      }
+
+      return controllers;
+    }
+
+    function handleController(controller) {}
 
     function resize() {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -110,6 +156,13 @@ const App = () => {
 
     function render() {
       stats.update();
+
+      if (controllers) {
+        controllers.forEach((controller) => {
+          handleController(controller);
+        });
+      }
+
       renderer.render(scene, camera);
     }
 
