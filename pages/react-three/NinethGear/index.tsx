@@ -1,8 +1,8 @@
 import { Box as ContainerBox } from "@mantine/core";
 import { OrbitControls, Stats } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Controllers, Interactive, XR } from "@react-three/xr";
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, useRef } from "react";
 import { BackSide, IcosahedronBufferGeometry, LineSegments, Mesh } from "three";
 import { BoxLineGeometry } from "three/examples/jsm/geometries/BoxLineGeometry";
 import Layout from "../../../components/layouts/article";
@@ -108,8 +108,6 @@ const App = () => {
   const isPointingToObject = useRef(false);
 
   const isSelectPressed = useRef(false);
-
-  const isHighlighted = useRef(false);
 
   const onSelectStart = (event: any) => {
     isSelectPressed.current = true;
