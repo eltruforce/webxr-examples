@@ -103,57 +103,188 @@ const Icosahedrons = ({
 const App = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const highlight = useRef<Mesh>(null!);
+  const rightHighlight = useRef<Mesh>(null!);
 
-  const isPointingToObject = useRef(false);
+  const leftHighlight = useRef<Mesh>(null!);
 
-  const isSelectPressed = useRef(false);
+  const isRightPointingToObject = useRef(false);
+
+  const isLeftPointingToObject = useRef(false);
+
+  const isRightSelectPressed = useRef(false);
+
+  const isLeftSelectPressed = useRef(false);
 
   const onSelectStart = (event: any) => {
-    isSelectPressed.current = true;
-
     const selectedObject = event.intersections[0]?.object;
 
-    if (isPointingToObject.current) {
-      highlight.current.position.copy(selectedObject.position);
-      highlight.current.visible = true;
-    } else if (!isPointingToObject.current) {
-      highlight.current.visible = false;
+    const controller = event.target;
+    const handedness = controller.inputSource.handedness;
+
+    if (handedness === "left") {
+      //check
+      isLeftSelectPressed.current = true; //check
+      if (isLeftPointingToObject.current) {
+        //check
+        if (rightHighlight.current.visible) {
+          //check
+          leftHighlight.current.position.copy(selectedObject.position); //check
+          leftHighlight.current.visible = true; //check
+          rightHighlight.current.visible = false; //check
+        } else if (!rightHighlight.current.visible) {
+          //check
+          leftHighlight.current.position.copy(selectedObject.position); //check
+          leftHighlight.current.visible = true; //check
+        }
+      } else if (!isLeftPointingToObject.current) {
+        if (isRightSelectPressed.current) {
+          if (isRightPointingToObject.current) {
+            leftHighlight.current.position.copy(selectedObject.position);
+            leftHighlight.current.visible = true;
+          } else if (!isRightPointingToObject.current) {
+            leftHighlight.current.visible = false;
+          }
+        } else if (!isRightSelectPressed.current) {
+          leftHighlight.current.visible = false;
+        }
+      }
+    } else if (handedness === "right") {
+      //check
+      isRightSelectPressed.current = true; //check
+      if (isRightPointingToObject.current) {
+        //check
+        if (leftHighlight.current.visible) {
+          //check
+          rightHighlight.current.position.copy(selectedObject.position); //check
+          rightHighlight.current.visible = true; //check
+          leftHighlight.current.visible = false; //check
+        } else if (!leftHighlight.current.visible) {
+          //check
+          rightHighlight.current.position.copy(selectedObject.position); //check
+          rightHighlight.current.visible = true; //check
+        }
+      } else if (!isRightPointingToObject.current) {
+        if (isLeftSelectPressed.current) {
+          if (isLeftPointingToObject.current) {
+            rightHighlight.current.position.copy(selectedObject.position);
+            rightHighlight.current.visible = true;
+          } else if (!isLeftPointingToObject.current) {
+            rightHighlight.current.visible = false;
+          }
+        } else if (!isLeftSelectPressed.current) {
+          rightHighlight.current.visible = false;
+        }
+      }
     }
   };
 
   const onSelectEnd = (event: any) => {
-    isSelectPressed.current = false;
+    const selectedObject = event.intersections[0]?.object;
 
-    if (isPointingToObject.current) {
-      highlight.current.visible = false;
-    } else if (!isPointingToObject.current) {
-      highlight.current.visible = false;
+    const controller = event.target;
+    const handedness = controller.inputSource.handedness;
+
+    if (handedness === "left") {
+      //check
+      isLeftSelectPressed.current = false; //check
+      if (isLeftPointingToObject.current) {
+        //check
+        if (isRightSelectPressed.current) {
+          //checl
+          leftHighlight.current.visible = false; //check
+          rightHighlight.current.visible = true; //check
+        } else if (!isRightSelectPressed.current) {
+          //check
+          leftHighlight.current.visible = false; //check
+        }
+      } else if (!isLeftPointingToObject.current) {
+        if (isRightSelectPressed.current) {
+          leftHighlight.current.position.copy(selectedObject.position);
+          leftHighlight.current.visible = true;
+        } else if (!isRightSelectPressed.current) {
+          leftHighlight.current.visible = false;
+        }
+      }
+    } else if (handedness === "right") {
+      //check
+      isRightSelectPressed.current = false; //check
+      if (isRightPointingToObject.current) {
+        //check
+        if (isLeftSelectPressed.current) {
+          //check
+          rightHighlight.current.visible = false; //check
+          leftHighlight.current.visible = true; //check
+        } else if (!isLeftSelectPressed.current) {
+          //check
+          rightHighlight.current.visible = false; //check
+          leftHighlight.current.visible = false; //check
+        }
+      } else if (!isRightPointingToObject.current) {
+        if (isLeftSelectPressed.current) {
+          rightHighlight.current.position.copy(selectedObject.position);
+          rightHighlight.current.visible = true;
+        } else if (!isLeftSelectPressed.current) {
+          rightHighlight.current.visible = false;
+        }
+      }
     }
   };
 
   const onHover = (event: any) => {
-    isPointingToObject.current = true;
     const selectedObject = event.intersections[0]?.object;
 
-    if (isSelectPressed.current) {
-      highlight.current.position.copy(selectedObject.position);
-      highlight.current.visible = true;
-    } else if (!isSelectPressed.current) {
-      highlight.current.visible = false;
+    const controller = event.target;
+    const handedness = controller.inputSource.handedness;
+
+    if (handedness === "left") {
+      isLeftPointingToObject.current = true;
+      if (isLeftSelectPressed.current) {
+        leftHighlight.current.position.copy(selectedObject.position);
+        leftHighlight.current.visible = true;
+      } else if (!isLeftSelectPressed.current) {
+        leftHighlight.current.visible = false;
+      }
+    } else if (handedness === "right") {
+      isRightPointingToObject.current = true;
+      if (isRightSelectPressed.current) {
+        rightHighlight.current.position.copy(selectedObject.position);
+        rightHighlight.current.visible = true;
+      } else if (!isRightSelectPressed.current) {
+        rightHighlight.current.visible = false;
+      }
     }
   };
 
   const onBlur = (event: any) => {
-    isPointingToObject.current = false;
-    highlight.current.visible = false;
+    const controller = event.target;
+    const handedness = controller.inputSource.handedness;
+
+    if (handedness === "left") {
+      isLeftPointingToObject.current = false;
+      leftHighlight.current.visible = false;
+    } else if (handedness === "right") {
+      isRightPointingToObject.current = false;
+      rightHighlight.current.visible = false;
+    }
   };
 
   const onSelectMissed = (event: any) => {
-    if (isSelectPressed.current) {
-      if (!isPointingToObject.current) {
-        highlight.current.visible = false;
-        isSelectPressed.current = false;
+    const controller = event.target;
+    const handedness = controller.inputSource.handedness;
+
+    if (handedness === "left") {
+      if (isLeftSelectPressed.current) {
+        if (!isLeftPointingToObject.current) {
+          leftHighlight.current.visible = false;
+          isLeftSelectPressed.current = false;
+        }
+      }
+    } else if (handedness === "right") {
+      if (isRightSelectPressed.current) {
+        if (!isRightPointingToObject.current) {
+          rightHighlight.current.visible = false;
+          isRightSelectPressed.current = false;
+        }
       }
     }
   };
@@ -198,7 +329,8 @@ const App = () => {
               onBlur={onBlur}
               onSelectMissed={onSelectMissed}
             />
-            <Highlight highlightRef={highlight} />
+            <Highlight highlightRef={rightHighlight} />
+            <Highlight highlightRef={leftHighlight} />
           </XR>
         </Canvas>
       </ContainerBox>
